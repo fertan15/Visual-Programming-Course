@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.emailTbox = new System.Windows.Forms.TextBox();
             this.usernameTbox = new System.Windows.Forms.TextBox();
             this.fullnameTbox = new System.Windows.Forms.TextBox();
             this.passwordTbox = new System.Windows.Forms.TextBox();
@@ -41,6 +41,10 @@
             this.signupButton = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label6 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.emailTbox = new System.Windows.Forms.TextBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -62,7 +66,6 @@
             this.label2.Size = new System.Drawing.Size(122, 29);
             this.label2.TabIndex = 1;
             this.label2.Text = "Username";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -73,15 +76,6 @@
             this.label3.Size = new System.Drawing.Size(125, 29);
             this.label3.TabIndex = 2;
             this.label3.Text = "Full Name";
-            // 
-            // emailTbox
-            // 
-            this.emailTbox.Font = new System.Drawing.Font("Times New Roman", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.emailTbox.Location = new System.Drawing.Point(363, 239);
-            this.emailTbox.Name = "emailTbox";
-            this.emailTbox.Size = new System.Drawing.Size(285, 36);
-            this.emailTbox.TabIndex = 3;
-            this.emailTbox.TextChanged += new System.EventHandler(this.emailTbox_TextChanged);
             // 
             // usernameTbox
             // 
@@ -106,6 +100,7 @@
             this.passwordTbox.Font = new System.Drawing.Font("Times New Roman", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordTbox.Location = new System.Drawing.Point(363, 417);
             this.passwordTbox.Name = "passwordTbox";
+            this.passwordTbox.PasswordChar = '*';
             this.passwordTbox.Size = new System.Drawing.Size(285, 36);
             this.passwordTbox.TabIndex = 7;
             this.passwordTbox.TextChanged += new System.EventHandler(this.passwordTbox_TextChanged);
@@ -125,6 +120,7 @@
             this.confirmpasswordTbox.Font = new System.Drawing.Font("Times New Roman", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.confirmpasswordTbox.Location = new System.Drawing.Point(363, 481);
             this.confirmpasswordTbox.Name = "confirmpasswordTbox";
+            this.confirmpasswordTbox.PasswordChar = '*';
             this.confirmpasswordTbox.Size = new System.Drawing.Size(285, 36);
             this.confirmpasswordTbox.TabIndex = 9;
             this.confirmpasswordTbox.TextChanged += new System.EventHandler(this.confirmpasswordTbox_TextChanged);
@@ -150,6 +146,7 @@
             this.signupButton.TabIndex = 10;
             this.signupButton.Text = "SIGN UP";
             this.signupButton.UseVisualStyleBackColor = false;
+            this.signupButton.Click += new System.EventHandler(this.signupButton_Click);
             // 
             // progressBar1
             // 
@@ -158,7 +155,6 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(842, 49);
             this.progressBar1.TabIndex = 11;
-            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // label6
             // 
@@ -170,11 +166,38 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "REGISTER";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // emailTbox
+            // 
+            this.emailTbox.Font = new System.Drawing.Font("Times New Roman", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.emailTbox.Location = new System.Drawing.Point(363, 244);
+            this.emailTbox.Name = "emailTbox";
+            this.emailTbox.Size = new System.Drawing.Size(285, 36);
+            this.emailTbox.TabIndex = 14;
+            this.emailTbox.TextChanged += new System.EventHandler(this.emailTbox_TextChanged);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.linkLabel1.Location = new System.Drawing.Point(438, 642);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(218, 25);
+            this.linkLabel1.TabIndex = 15;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Already Have Account?";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(866, 688);
+            this.ClientSize = new System.Drawing.Size(877, 688);
+            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.emailTbox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.signupButton);
@@ -184,13 +207,12 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.fullnameTbox);
             this.Controls.Add(this.usernameTbox);
-            this.Controls.Add(this.emailTbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,7 +223,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox emailTbox;
         private System.Windows.Forms.TextBox usernameTbox;
         private System.Windows.Forms.TextBox fullnameTbox;
         private System.Windows.Forms.TextBox passwordTbox;
@@ -211,6 +232,9 @@
         private System.Windows.Forms.Button signupButton;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.TextBox emailTbox;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

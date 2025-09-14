@@ -9,3 +9,5 @@ C:\Users\ferli\source\repos\Visual-Programming-Course\Tugas_1\Tugas_1\bin\Debug\
 C:\Users\ferli\source\repos\Visual-Programming-Course\Tugas_1\Tugas_1\obj\Debug\Tugas_1.exe
 C:\Users\ferli\source\repos\Visual-Programming-Course\Tugas_1\Tugas_1\obj\Debug\Tugas_1.pdb
 C:\Users\ferli\source\repos\Visual-Programming-Course\Tugas_1\Tugas_1\obj\Debug\Tugas_1.exe.config
+C:\Users\ferli\source\repos\Visual-Programming-Course\Tugas_1\Tugas_1\obj\Debug\Tugas_1.Form2.resources
+C:\Users\ferli\source\repos\Visual-Programming-Course\Tugas_1\Tugas_1\obj\Debug\Tugas_1.Form3.resources

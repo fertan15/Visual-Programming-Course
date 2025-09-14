@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,37 +22,28 @@ namespace Tugas_1
         bool passwordAdded = false;
         bool confirmPasswordAdded = false;
 
-        
 
+        Form3 master;
 
-        public Form1()
+        public Form1(Form3 master)
         {
             InitializeComponent();
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
+            this.master = master;
         }
 
 
-        private void progressBar1_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
         private void emailTbox_TextChanged(object sender, EventArgs e)
         {
             //email
-            if (emailTbox.Text.Length == 0 && emailAdded == true && progressBar1.Value >= 20) { 
+            if (emailAdded == true && progressBar1.Value >= 20 && !Regex.IsMatch(emailTbox.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+            {
                 progressBar1.Value -= 20;
                 emailAdded = false;
 
-            }else if (emailTbox.Text.Length > 0 && emailAdded == false && progressBar1.Value <= 100) {
+            }
+            else if (emailAdded == false && progressBar1.Value <= 100 && Regex.IsMatch(emailTbox.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+            {
                 progressBar1.Value += 20;
                 emailAdded = true;
 
@@ -77,7 +71,7 @@ namespace Tugas_1
 
         private void fullnameTbox_TextChanged(object sender, EventArgs e)
         {
-            //username
+            //fullname
             if (fullnameTbox.Text.Length == 0 && fullnameAdded == true && progressBar1.Value >= 20)
             {
                 progressBar1.Value -= 20;
@@ -94,11 +88,12 @@ namespace Tugas_1
 
         private void passwordTbox_TextChanged(object sender, EventArgs e)
         {
-            //username
+            //password
             if (passwordTbox.Text.Length == 0 && passwordAdded == true && progressBar1.Value >= 20)
             {
                 progressBar1.Value -= 20;
                 passwordAdded = false;
+
 
             }
             else if (passwordTbox.Text.Length > 0 && passwordAdded == false && progressBar1.Value <= 100)
@@ -111,7 +106,7 @@ namespace Tugas_1
 
         private void confirmpasswordTbox_TextChanged(object sender, EventArgs e)
         {
-            
+            //confirm password
             if (confirmpasswordTbox.Text != passwordTbox.Text && confirmPasswordAdded == true)
             {
                 progressBar1.Value -= 20;
@@ -125,5 +120,76 @@ namespace Tugas_1
 
             }
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Close();
+            master.Show();
+        }
+
+        private void signupButton_Click(object sender, EventArgs e)
+        {
+            if (!emailAdded)
+            {
+                if (emailTbox.Text == "")
+                {
+                    errorProvider1.SetError(emailTbox, "Email cannot be empty.");
+                }
+                else
+                {
+                    errorProvider1.SetError(emailTbox, "Please enter a valid email address.");
+                }
+            }
+
+            if (!usernameAdded)
+            {
+                errorProvider1.SetError(usernameTbox, "Username cannot be empty.");
+            }
+
+            if (!fullnameAdded)
+            {
+                errorProvider1.SetError(fullnameTbox, "Full name cannot be empty.");
+            }
+
+            if (!passwordAdded)
+            {
+                errorProvider1.SetError(passwordTbox, "Password cannot be empty.");
+            }
+
+            if (!confirmPasswordAdded)
+            {
+                if (confirmpasswordTbox.Text == "")
+                {
+                    errorProvider1.SetError(confirmpasswordTbox, "Please confirm your password.");
+                }
+                else
+                {
+                    errorProvider1.SetError(confirmpasswordTbox, "Passwords do not match.");
+                }
+            }
+
+            if (emailAdded && usernameAdded && fullnameAdded && passwordAdded && confirmPasswordAdded)
+            {
+                Account newAccount = new Account(emailTbox.Text, usernameTbox.Text, fullnameTbox.Text, passwordTbox.Text);
+                using (StreamWriter writer = new StreamWriter("account.txt", true))
+                {
+                    writer.WriteLine(newAccount.email);
+                    writer.WriteLine(newAccount.username);
+                    writer.WriteLine(newAccount.fullName);
+                    writer.WriteLine(newAccount.password);
+                }
+
+                MessageBox.Show("Account created successfully!\n\n" +
+                    "Email: " + newAccount.email + "\n" +
+                    "Username: " + newAccount.username + "\n" +
+                    "Full Name: " + newAccount.fullName);
+
+
+                Form2 masuk = new Form2(master,newAccount);
+                masuk.Show();
+                this.Close();
+            }
+        }
     }
+
 }
